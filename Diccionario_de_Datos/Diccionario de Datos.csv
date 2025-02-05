@@ -1,0 +1,50 @@
+Tabla: Clientes;;;
+Nombre del Campo;Tipo de Dato;Restricciones;Descripción
+ClienteID;INT;PRIMARY KEY, AUTO_INCREMENT;
+"Nombre	";VARCHAR(100);NOT NULL;Nombre del cliente.
+"Apellido	";VARCHAR(100);NOT NULL;Apellido del cliente.
+"Email	";VARCHAR(100);UNIQUE, NOT NULL;Correo electrónico del cliente.
+"Telefono	";VARCHAR(15);;Número de teléfono del cliente.
+"DNI_ID	";VARCHAR(20);UNIQUE, NOT NULL;Documento de identidad del cliente.
+"Contraseña	";VARCHAR(255);NOT NULL;Contraseña cifrada del cliente.
+Relacionada con la tabla Boletos a través de ClienteID.;;;
+;;;
+Tabla: Películas;;;
+Nombre del Campo;Tipo de Dato;Restricciones;Descripción
+PeliculaID;INT;PRIMARY KEY, AUTO_INCREMENT;Identificador único de la película.
+"Titulo	";VARCHAR(200);NOT NULL;Título de la película.
+"Genero	";VARCHAR(100);NOT NULL;Género de la película.
+"Duracion	";INT;NOT NULL;Duración de la película en minutos.
+"Clasificacion	";VARCHAR(50);NOT NULL;Clasificación por edad (ej: PG-13).
+"FechaEstreno	";DATE;NOT NULL;Fecha de estreno de la película.
+Relacionada con la tabla Funciones a través de PeliculaID.;;;
+;;;
+Tabla: Funciones;;;
+Nombre del Campo;Tipo de Dato;Restricciones;Descripción
+ FuncionID;INT;PRIMARY KEY, AUTO_INCREMENT;Identificador único de la función.
+" PeliculaID	";INT;FOREIGN KEY, NOT NULL;Identificador de la película proyectada.
+"Sala	";VARCHAR(50);NOT NULL;Sala donde se proyecta la función.
+"FechaHora	";DATETIME;NOT NULL;Fecha y hora de la función.
+AsientosDisponibles;INT;NOT NULL;Número de asientos disponibles.
+Relacionada con la tabla Películas a través de PeliculaID.;;;
+Relacionada con la tabla Boletos a través de FuncionID.;;;
+;;;
+Tabla: Boletos;;;
+Nombre del Campo;Tipo de Dato;Restricciones;Descripción
+BoletoID;INT;PRIMARY KEY, AUTO_INCREMENT;Identificador único del boleto.
+ClienteID;INT;FOREIGN KEY, NOT NULL;Identificador del cliente que compró el boleto.
+FuncionID;INT;FOREIGN KEY, NOT NULL;Identificador de la función.
+AsientosReservados;INT;NOT NULL;Número de asientos reservados.
+PrecioTotal;DECIMAL(10, 2);NOT NULL;Precio total del boleto
+Relacionada con la tabla Clientes a través de ClienteID.;;;
+Relacionada con la tabla Funciones a través de FuncionID.;;;
+Relacionada con la tabla Pagos a través de BoletoID.;;;
+;;;
+Tabla: Pagos;;;
+Nombre del Campo;Tipo de Dato;Restricciones;Descripción
+PagoID;INT;PRIMARY KEY, AUTO_INCREMENT;Identificador único del pago.
+BoletoID;INT;FOREIGN KEY, NOT NULL;Identificador del boleto asociado.
+"MetodoPago	";ENUM;NOT NULL;Método de pago utilizado.
+FechaPago;DATETIME;DEFAULT CURRENT_TIMESTAMP;Fecha y hora del pago.
+Monto;DECIMAL(10, 2);NOT NULL;Monto del pago.
+Relacionada con la tabla Boletos a través de BoletoID.;;;
